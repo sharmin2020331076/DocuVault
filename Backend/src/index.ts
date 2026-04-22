@@ -2,12 +2,12 @@ import express from 'express';
 import passport from 'passport';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth.routes';
-import documentRoutes from './routes/document.routes';
-import categoryRoutes from './routes/category.routes';
-import notificationRoutes from './routes/notification.routes';
-import { getStats } from './controllers/stats.controller';
-import { authenticateToken } from './middlewares/auth';
+import authRoutes from './routes/auth.routes.js';
+import documentRoutes from './routes/document.routes.js';
+import categoryRoutes from './routes/category.routes.js';
+import notificationRoutes from './routes/notification.routes.js';
+import { getStats } from './controllers/stats.controller.js';
+import { authenticateToken } from './middlewares/auth.js';
 
 dotenv.config({ path: '../.env' });
 

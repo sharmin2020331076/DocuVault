@@ -1,9 +1,9 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middlewares/auth';
-import { db } from '../db';
-import { documents, categories, reminders } from '../db/schema';
+import { AuthRequest } from '../middlewares/auth.js';
+import { db } from '../db/index.js';
+import { documents, categories, reminders } from '../db/schema.js';
 import { eq, and, desc } from 'drizzle-orm';
-import cloudinary from '../config/cloudinary';
+import cloudinary from '../config/cloudinary.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export const uploadDocument = async (req: AuthRequest, res: Response) => {
@@ -24,7 +24,7 @@ export const uploadDocument = async (req: AuthRequest, res: Response) => {
           public_id: `doc_${uuidv4()}`,
           access_mode: 'authenticated', // Secure delivery
         },
-        (error, result) => {
+        (error: any, result: any) => {
           if (error) reject(error);
           else resolve(result);
         }
@@ -46,10 +46,12 @@ export const uploadDocument = async (req: AuthRequest, res: Response) => {
     }).returning();
 
     // Create default reminder
-    await db.insert(reminders).values({
-      documentId: newDoc.id,
-      leadTimeDays: parseInt(leadTimeDays) || 30,
-    });
+    if (newDoc) {
+      await db.insert(reminders).values({
+        documentId: newDoc.id,
+        leadTimeDays: parseInt(leadTimeDays) || 30,
+      });
+    }
 
     res.status(201).json(newDoc);
   } catch (error: any) {
@@ -72,7 +74,7 @@ export const getDocuments = async (req: AuthRequest, res: Response) => {
     });
 
     // For secure delivery, generate signed URLs
-    const docsWithSignedUrls = userDocs.map((doc) => {
+    const docsWithSignedUrls = userDocs.map((doc: any) => {
       const signedUrl = cloudinary.url(doc.cloudinaryPublicId, {
         sign_url: true,
         type: 'authenticated',
@@ -94,7 +96,7 @@ export const deleteDocument = async (req: AuthRequest, res: Response) => {
     const { id } = req.params;
 
     const doc = await db.query.documents.findFirst({
-      where: and(eq(documents.id, id), eq(documents.userId, userId!)),
+      where: and(eq(documents.id, id as string), eq(documents.userId, userId!)),
     });
 
     if (!doc) return res.status(404).json({ message: 'Document not found' });
@@ -103,7 +105,7 @@ export const deleteDocument = async (req: AuthRequest, res: Response) => {
     await cloudinary.uploader.destroy(doc.cloudinaryPublicId);
 
     // Delete from DB
-    await db.delete(documents).where(eq(documents.id, id));
+    await db.delete(documents).where(eq(documents.id, id as string));
 
     res.json({ message: 'Document deleted successfully' });
   } catch (error: any) {

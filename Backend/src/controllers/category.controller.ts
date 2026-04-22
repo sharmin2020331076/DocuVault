@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middlewares/auth';
-import { db } from '../db';
-import { categories } from '../db/schema';
+import { AuthRequest } from '../middlewares/auth.js';
+import { db } from '../db/index.js';
+import { categories } from '../db/schema.js';
 import { eq, and } from 'drizzle-orm';
 
 export const getCategories = async (req: AuthRequest, res: Response) => {
@@ -43,7 +43,7 @@ export const deleteCategory = async (req: AuthRequest, res: Response) => {
     const userId = req.user?.id;
     const { id } = req.params;
 
-    await db.delete(categories).where(and(eq(categories.id, id), eq(categories.userId, userId!)));
+    await db.delete(categories).where(and(eq(categories.id, id as string), eq(categories.userId, userId!)));
 
     res.json({ message: 'Category deleted' });
   } catch (error: any) {

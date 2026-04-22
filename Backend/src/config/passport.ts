@@ -1,8 +1,8 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
-import { db } from '../db';
-import { users, categories } from '../db/schema';
+import { db } from '../db/index.js';
+import { users, categories } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
 
 const seedDefaultCategories = async (userId: string) => {
@@ -28,9 +28,9 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'dummy',
     callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/auth/google/callback`
   },
-  async (_accessToken, _refreshToken, profile, done) => {
+  async (_accessToken: string, _refreshToken: string, profile: any, done: any) => {
     try {
-      let user = await db.query.users.findFirst({
+      let user: any = await db.query.users.findFirst({
         where: eq(users.googleId, profile.id)
       });
 
@@ -50,7 +50,7 @@ passport.use(new GoogleStrategy({
             email: email || `${profile.id}@google.com`,
             googleId: profile.id,
           }).returning();
-          await seedDefaultCategories(user.id);
+          if (user) await seedDefaultCategories(user.id);
         }
       }
       return done(null, user);
@@ -65,9 +65,9 @@ passport.use(new GitHubStrategy({
     clientSecret: process.env.GITHUB_CLIENT_SECRET || 'dummy',
     callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/auth/github/callback`
   },
-  async (_accessToken, _refreshToken, profile, done) => {
+  async (_accessToken: string, _refreshToken: string, profile: any, done: any) => {
     try {
-      let user = await db.query.users.findFirst({
+      let user: any = await db.query.users.findFirst({
         where: eq(users.githubId, profile.id)
       });
 
@@ -87,7 +87,7 @@ passport.use(new GitHubStrategy({
             email: email || `${profile.id}@github.com`,
             githubId: profile.id,
           }).returning();
-          await seedDefaultCategories(user.id);
+          if (user) await seedDefaultCategories(user.id);
         }
       }
       return done(null, user);

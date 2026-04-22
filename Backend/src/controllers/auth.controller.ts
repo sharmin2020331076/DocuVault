@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { db } from '../db';
-import { users, categories } from '../db/schema';
+import { db } from '../db/index.js';
+import { users, categories } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
 
 export const signup = async (req: Request, res: Response) => {
@@ -27,6 +27,8 @@ export const signup = async (req: Request, res: Response) => {
       email,
       password: hashedPassword,
     }).returning();
+
+    if (!user) throw new Error('User creation failed');
 
     // Seed default categories
     const defaultCategories = [
@@ -66,7 +68,7 @@ export const login = async (req: Request, res: Response) => {
       where: eq(users.email, email),
     });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !user.password || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 

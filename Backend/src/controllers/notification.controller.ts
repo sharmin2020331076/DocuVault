@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middlewares/auth';
-import { db } from '../db';
-import { notifications } from '../db/schema';
+import { AuthRequest } from '../middlewares/auth.js';
+import { db } from '../db/index.js';
+import { notifications } from '../db/schema.js';
 import { eq, and, desc } from 'drizzle-orm';
 
 export const getNotifications = async (req: AuthRequest, res: Response) => {
@@ -42,7 +42,7 @@ export const deleteNotification = async (req: AuthRequest, res: Response) => {
     if (!userId) return res.status(401).json({ message: 'Unauthorized' });
 
     await db.delete(notifications)
-      .where(and(eq(notifications.id, id), eq(notifications.userId, userId)));
+      .where(and(eq(notifications.id, id as string), eq(notifications.userId, userId)));
 
     res.json({ message: 'Notification deleted' });
   } catch (error: any) {

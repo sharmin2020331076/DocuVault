@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import passport from '../config/passport';
+import passport from '../config/passport.js';
 import jwt from 'jsonwebtoken';
-import { signup, login, deleteAccount } from '../controllers/auth.controller';
-import { authenticateToken } from '../middlewares/auth';
+import { signup, login, deleteAccount } from '../controllers/auth.controller.js';
+import { authenticateToken } from '../middlewares/auth.js';
 
 const router = Router();
 

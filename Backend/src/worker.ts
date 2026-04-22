@@ -1,8 +1,8 @@
 import cron from 'node-cron';
-import { db } from './db';
-import { documents, reminders, notifications, users } from './db/schema';
+import { db } from './db/index.js';
+import { documents, reminders, notifications, users } from './db/schema.js';
 import { eq, and, sql, lte, gte } from 'drizzle-orm';
-import { sendExpiryEmail } from './utils/resend';
+import { sendExpiryEmail } from './utils/resend.js';
 
 const checkExpiries = async () => {
   console.log('Running daily expiry check...');

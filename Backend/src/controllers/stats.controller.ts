@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middlewares/auth';
-import { db } from '../db';
-import { documents, notifications } from '../db/schema';
+import { AuthRequest } from '../middlewares/auth.js';
+import { db } from '../db/index.js';
+import { documents, notifications } from '../db/schema.js';
 import { eq, count, and } from 'drizzle-orm';
 
 export const getStats = async (req: AuthRequest, res: Response) => {
@@ -15,14 +15,14 @@ export const getStats = async (req: AuthRequest, res: Response) => {
     
     const unreadNotifications = await db.query.notifications.findMany({
       where: and(eq(notifications.userId, userId), eq(notifications.isRead, false)),
-      orderBy: (notifications, { desc }) => [desc(notifications.createdAt)],
+      orderBy: (notifications: any, { desc }: any) => [desc(notifications.createdAt)],
       limit: 5
     });
 
     res.json({
-      total: totalDocs.value,
-      expiring: expiringDocs.value,
-      expired: expiredDocs.value,
+      total: totalDocs?.value || 0,
+      expiring: expiringDocs?.value || 0,
+      expired: expiredDocs?.value || 0,
       notifications: unreadNotifications
     });
   } catch (error: any) {
@@ -34,7 +34,7 @@ export const markNotificationRead = async (req: AuthRequest, res: Response) => {
     try {
         const userId = req.user?.id;
         const { id } = req.params;
-        await db.update(notifications).set({ isRead: true }).where(and(eq(notifications.id, id), eq(notifications.userId, userId!)));
+        await db.update(notifications).set({ isRead: true }).where(and(eq(notifications.id, id as string), eq(notifications.userId, userId!)));
         res.json({ message: 'Marked as read' });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
