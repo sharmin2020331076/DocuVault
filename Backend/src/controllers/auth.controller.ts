@@ -81,3 +81,13 @@ export const login = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const deleteAccount = async (req: any, res: Response) => {
+  try {
+    const userId = req.user.id;
+    await db.delete(users).where(eq(users.id, userId));
+    res.json({ message: 'Account deleted successfully' });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};

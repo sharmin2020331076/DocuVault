@@ -33,20 +33,20 @@ const Vault = () => {
     <div className="p-8 space-y-8">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Document Vault</h1>
-          <p className="text-slate-400">Total {docs?.length || 0} items secured.</p>
+          <h1 className="text-3xl font-bold text-[var(--text-main)]">Document Vault</h1>
+          <p className="text-[var(--text-sub)]">Total {docs?.length || 0} items secured.</p>
         </div>
         <div className="flex gap-3">
           <button 
             onClick={() => setIsManageCategoriesOpen(true)}
-            className="glass-button flex items-center justify-center gap-2 border-white/5 hover:bg-white/5"
+            className="px-4 py-2 bg-[var(--input-bg)] border border-[var(--border-sub)] hover:bg-[var(--input-hover)] rounded-xl flex items-center justify-center gap-2 transition-all text-[var(--text-main)]"
           >
-            <Tag size={20} className="text-slate-400" />
+            <Tag size={20} className="text-[var(--text-sub)]" />
             <span>Categories</span>
           </button>
           <button 
             onClick={() => setIsUploadOpen(true)}
-            className="glass-button flex items-center justify-center gap-2 bg-blue-600/20 text-blue-400 border-blue-500/30 hover:bg-blue-600/30"
+            className="px-4 py-2 bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600/30 rounded-xl flex items-center justify-center gap-2 transition-all"
           >
             <Plus size={20} />
             <span>Upload</span>
@@ -55,7 +55,7 @@ const Vault = () => {
       </header>
 
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={20} />
         <input 
           type="text" 
           placeholder="Search by name..." 
@@ -66,7 +66,7 @@ const Vault = () => {
       </div>
 
       {isLoading ? (
-        <div className="text-center py-20 text-slate-500">Decrypting your vault...</div>
+        <div className="text-center py-20 text-[var(--text-muted)] font-medium">Decrypting your vault...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
@@ -89,7 +89,7 @@ const Vault = () => {
                       {doc.status}
                     </div>
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <a href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-white/10 rounded-lg text-blue-400">
+                      <a href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-[var(--input-bg)] rounded-lg text-blue-400">
                         <ExternalLink size={18} />
                       </a>
                       <button 
@@ -102,15 +102,15 @@ const Vault = () => {
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-semibold mb-1 group-hover:text-blue-400 transition-colors">{doc.title}</h3>
-                    <div className="flex items-center gap-2 text-sm text-slate-500">
+                    <h3 className="text-xl font-semibold mb-1 group-hover:text-blue-400 transition-colors text-[var(--text-main)]">{doc.title}</h3>
+                    <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
                       <Tag size={14} />
                       <span>{doc.category?.name || 'Uncategorized'}</span>
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-slate-400 text-sm">
+                  <div className="pt-4 border-t border-[var(--border-sub)] flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-[var(--text-sub)] text-sm">
                       <Calendar size={16} />
                       <span>Expires {new Date(doc.expiryDate).toLocaleDateString()}</span>
                     </div>

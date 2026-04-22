@@ -69,15 +69,15 @@ export const UploadModal = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm">
       <motion.div 
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         className="glass-card w-full max-w-2xl rounded-3xl"
       >
-        <div className="flex items-center justify-between p-6 border-b border-white/10">
-          <h2 className="text-xl font-bold">Secure Upload</h2>
-          <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-full">
+        <div className="flex items-center justify-between p-6 border-b border-[var(--border-sub)]">
+          <h2 className="text-xl font-bold text-[var(--text-main)]">Secure Upload</h2>
+          <button onClick={onClose} className="p-2 hover:bg-[var(--input-bg)] rounded-full text-[var(--text-sub)] hover:text-[var(--text-main)]">
             <X size={20} />
           </button>
         </div>
@@ -87,23 +87,23 @@ export const UploadModal = ({ onClose }: { onClose: () => void }) => {
             <div 
               {...getRootProps()} 
               className={`border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center text-center transition-all cursor-pointer ${
-                isDragActive ? 'border-blue-500 bg-blue-500/10' : 'border-white/10 hover:border-white/20'
+                isDragActive ? 'border-blue-500 bg-blue-500/10' : 'border-[var(--border-sub)] hover:border-[var(--border-main)]'
               } ${file ? 'border-green-500/50 bg-green-500/5' : ''}`}
             >
               <input {...getInputProps()} />
               {file ? (
                 <>
                   <CheckCircle2 size={40} className="text-green-400 mb-4" />
-                  <p className="text-sm font-medium">{file.name}</p>
-                  <p className="text-xs text-slate-500 mt-2">Click to replace</p>
+                  <p className="text-sm font-medium text-[var(--text-main)]">{file.name}</p>
+                  <p className="text-xs text-[var(--text-muted)] mt-2">Click to replace</p>
                 </>
               ) : (
                 <>
-                  <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
-                    <Upload size={32} className="text-slate-400" />
+                  <div className="w-16 h-16 bg-[var(--input-bg)] rounded-full flex items-center justify-center mb-4">
+                    <Upload size={32} className="text-[var(--text-sub)]" />
                   </div>
-                  <p className="text-sm">Drag & drop your document</p>
-                  <p className="text-xs text-slate-500 mt-2">PDF, JPEG, PNG supported</p>
+                  <p className="text-sm text-[var(--text-main)]">Drag & drop your document</p>
+                  <p className="text-xs text-[var(--text-muted)] mt-2">PDF, JPEG, PNG supported</p>
                 </>
               )}
             </div>
@@ -118,7 +118,7 @@ export const UploadModal = ({ onClose }: { onClose: () => void }) => {
 
           <div className="space-y-4 relative">
             <div>
-              <label className="text-sm font-medium text-slate-400 mb-1 block">Document Title *</label>
+              <label className="text-sm font-medium text-[var(--text-sub)] mb-1 block">Document Title *</label>
               <input 
                 type="text" 
                 placeholder="e.g. Car Insurance" 
@@ -129,17 +129,17 @@ export const UploadModal = ({ onClose }: { onClose: () => void }) => {
             </div>
 
             <div className="relative">
-              <label className="text-sm font-medium text-slate-400 mb-1 block">Category</label>
+              <label className="text-sm font-medium text-[var(--text-sub)] mb-1 block">Category</label>
               <div 
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
                 className="pl-2 glass-input w-full cursor-pointer flex items-center justify-between group"
               >
-                <span className={categoryId ? 'text-white' : 'text-slate-500'}>
+                <span className={categoryId ? 'text-[var(--text-main)]' : 'text-[var(--text-muted)]'}>
                   {categoryId ? categories?.find((c: any) => c.id === categoryId)?.name : 'Select Category'}
                 </span>
                 <motion.div
                   animate={{ rotate: isCategoryOpen ? 180 : 0 }}
-                  className="text-slate-500 group-hover:text-blue-500 transition-colors"
+                  className="text-[var(--text-sub)] group-hover:text-blue-500 transition-colors"
                 >
                   <ChevronDown size={18} />
                 </motion.div>
@@ -157,12 +157,12 @@ export const UploadModal = ({ onClose }: { onClose: () => void }) => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: -10 }}
                     transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                    className="absolute z-[60] left-0 right-0 mt-1 glass-card rounded-xl overflow-hidden shadow-2xl backdrop-blur-[60px] bg-[#0f172a]/95 border-white/10 origin-top"
+                    className="absolute z-[60] left-0 right-0 mt-1 glass-card rounded-xl overflow-hidden shadow-2xl backdrop-blur-[var(--glass-blur)] bg-[var(--card-bg)] border-[var(--border-sub)] origin-top"
                   >
                     <div className="p-1 max-h-40 overflow-y-auto custom-scrollbar">
                       <div 
                         onClick={() => { setCategoryId(''); setIsCategoryOpen(false); }}
-                        className="p-3 hover:bg-white/10 rounded-xl cursor-pointer transition-colors text-slate-400 hover:text-white"
+                        className="p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer transition-colors text-[var(--text-sub)] hover:text-[var(--text-main)]"
                       >
                         Select Category
                       </div>
@@ -170,10 +170,10 @@ export const UploadModal = ({ onClose }: { onClose: () => void }) => {
                         <div 
                           key={cat.id} 
                           onClick={() => { setCategoryId(cat.id); setIsCategoryOpen(false); }}
-                          className="p-3 hover:bg-white/10 rounded-xl cursor-pointer transition-colors flex items-center gap-3 group"
+                          className="p-3 hover:bg-[var(--input-bg)] rounded-xl cursor-pointer transition-colors flex items-center gap-3 group"
                         >
                           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: cat.color }} />
-                          <span className="group-hover:text-blue-400 transition-colors">{cat.name}</span>
+                          <span className="text-[var(--text-sub)] group-hover:text-blue-400 transition-colors">{cat.name}</span>
                         </div>
                       ))}
                     </div>
@@ -190,7 +190,7 @@ export const UploadModal = ({ onClose }: { onClose: () => void }) => {
                   onChange={setExpiryDate}
                 />
               <div>
-                <label className="text-sm font-medium text-slate-400 mb-1 block">Reminder (Days)</label>
+                <label className="text-sm font-medium text-[var(--text-sub)] mb-1 block">Reminder (Days)</label>
                 <input 
                   type="number" 
                   placeholder="30" 

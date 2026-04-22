@@ -6,6 +6,8 @@ import { Layout } from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Vault from './pages/Vault';
+import Landing from './pages/Landing';
+import Notifications from './pages/Notifications';
 
 const queryClient = new QueryClient();
 
@@ -21,7 +23,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Layout><Login /></Layout>} />
             <Route 
               path="/dashboard" 
               element={<ProtectedRoute><Dashboard /></ProtectedRoute>} 
@@ -30,7 +32,11 @@ const App = () => {
               path="/vault" 
               element={<ProtectedRoute><Vault /></ProtectedRoute>} 
             />
-            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route 
+              path="/notifications" 
+              element={<ProtectedRoute><Notifications /></ProtectedRoute>} 
+            />
+            <Route path="/" element={<Layout><Landing /></Layout>} />
           </Routes>
         </AuthProvider>
       </QueryClientProvider>

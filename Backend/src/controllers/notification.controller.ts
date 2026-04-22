@@ -34,3 +34,18 @@ export const markAllRead = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const deleteNotification = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+
+    await db.delete(notifications)
+      .where(and(eq(notifications.id, id), eq(notifications.userId, userId)));
+
+    res.json({ message: 'Notification deleted' });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
