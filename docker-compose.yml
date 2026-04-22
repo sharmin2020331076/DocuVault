@@ -1,0 +1,21 @@
+services:
+  api:
+    build: ./Backend
+    ports:
+      - "5000:5000"
+    env_file: .env
+    environment:
+      - PORT=5000
+    command: node dist/index.js
+
+  cron-worker:
+    build: ./Backend
+    env_file: .env
+    command: node dist/worker.js
+
+  frontend:
+    build: ./Frontend
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
