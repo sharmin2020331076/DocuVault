@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Lock, Bell, LayoutDashboard, ArrowRight, CheckCircle2, Globe, Zap, Mail, FileText } from 'lucide-react';
+import { Shield, Lock, Globe, Zap, ArrowRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 const Landing = () => {
@@ -46,7 +45,7 @@ const Landing = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5, ease: "easeOut" }
+      transition: { duration: 0.5 }
     }
   };
 
@@ -66,7 +65,7 @@ const Landing = () => {
           transition={{ duration: 0.6 }}
           className="relative z-10 max-w-4xl"
         >
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
@@ -78,19 +77,19 @@ const Landing = () => {
             </span>
             Next-Gen Security for Life Admin
           </motion.div>
-          
+
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] mb-6 lg:mb-8 tracking-tight px-2">
-            The Ultimate <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-purple-500 bg-clip-text text-transparent">Life Admin</span> <br className="hidden sm:block" /> 
+            The Ultimate <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-purple-500 bg-clip-text text-transparent">Life Admin</span> <br className="hidden sm:block" />
             Vault for Your Future.
           </h1>
-          
+
           <p className="text-base sm:text-lg lg:text-xl text-[var(--text-sub)] mb-8 lg:mb-12 max-w-2xl mx-auto leading-relaxed px-4">
-            DocuVault is the world's most secure platform for organizing your life's vital documents, 
+            DocuVault is the world's most secure platform for organizing your life's vital documents,
             tracking assets, and ensuring your legacy is protected.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4">
-            <NavLink 
+            <NavLink
               to="/login"
               className="w-full sm:w-auto px-8 lg:px-10 py-3.5 lg:py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold text-base lg:text-lg shadow-xl shadow-blue-600/20 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 group"
             >
@@ -113,7 +112,7 @@ const Landing = () => {
         >
           <div className="aspect-[4/3] sm:aspect-[16/9] glass-card rounded-2xl lg:rounded-[2rem] border-white/10 shadow-2xl overflow-hidden relative group">
             <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/10 via-transparent to-purple-600/10 opacity-30" />
-            
+
             {/* Browser Header */}
             <div className="absolute top-0 left-0 w-full h-8 sm:h-12 border-b border-white/10 flex items-center px-4 sm:px-6 gap-1.5 sm:gap-2 bg-white/5 backdrop-blur-md z-20">
               <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500/40" />
@@ -123,24 +122,24 @@ const Landing = () => {
 
             {/* Dashboard Image */}
             <div className="absolute inset-0 pt-8 sm:pt-12 overflow-hidden bg-[#0a0c10]">
-              <img 
-                src="/image.png" 
-                alt="Dashboard Preview" 
+              <img
+                src="/image.png"
+                alt="Dashboard Preview"
                 className="w-full h-full object-cover object-top opacity-50 group-hover:opacity-70 transition-opacity duration-1000"
               />
             </div>
 
             {/* Centered Overlay */}
             <div className="absolute inset-0 flex items-center justify-center p-4">
-               <motion.div 
-                 whileHover={{ scale: 1.05 }}
-                 className="px-4 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-2xl rounded-xl sm:rounded-2xl border border-white/20 shadow-2xl z-30"
-               >
-                 <p className="font-bold flex items-center gap-2 sm:gap-3 text-xs sm:text-base">
-                   <Shield className="text-blue-400" size={16} />
-                   100% End-to-End Encrypted
-                 </p>
-               </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="px-4 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-2xl rounded-xl sm:rounded-2xl border border-white/20 shadow-2xl z-30"
+              >
+                <p className="font-bold flex items-center gap-2 sm:gap-3 text-xs sm:text-base">
+                  <Shield className="text-blue-400" size={16} />
+                  100% End-to-End Encrypted
+                </p>
+              </motion.div>
             </div>
           </div>
         </motion.div>
@@ -148,7 +147,7 @@ const Landing = () => {
 
       {/* Features Section - Responsive Grid */}
       <section className="py-20 lg:py-32 px-4 sm:px-6 lg:px-24 relative">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -156,12 +155,12 @@ const Landing = () => {
         >
           <h2 className="text-3xl lg:text-4xl font-bold mb-4 lg:mb-6 px-4">Built for Total Peace of Mind</h2>
           <p className="text-[var(--text-sub)] text-sm lg:text-base max-w-2xl mx-auto px-6">
-            We've combined bank-level security with a premium user experience to make 
+            We've combined bank-level security with a premium user experience to make
             life admin something you actually enjoy.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -209,7 +208,7 @@ const Landing = () => {
             </div>
             <span className="text-xl font-bold">DocuVault</span>
           </div>
-          
+
           <div className="flex flex-wrap justify-center gap-6 lg:gap-8 text-xs lg:text-sm text-[var(--text-sub)] font-medium">
             <a href="#" className="hover:text-blue-400 transition-colors">Privacy</a>
             <a href="#" className="hover:text-blue-400 transition-colors">Terms</a>
